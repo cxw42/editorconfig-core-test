@@ -1,16 +1,16 @@
 #
 # Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1. Redistributions of source code must retain the above copyright notice,
 #    this list of conditions and the following disclaimer.
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 #    this list of conditions and the following disclaimer in the documentation
 #    and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -63,4 +63,45 @@ add_subdirectory(properties)
 add_subdirectory(parser)
 add_subdirectory(filetree)
 add_subdirectory(cli)
+
+# Copy the *.in files into the test tree whenever cmake runs
+file(GLOB_RECURSE IN_FILES
+    LIST_DIRECTORIES FALSE
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    glob/*.in properties/*.in parser/*.in filetree/*.in cli/*.in
+    )
+
+# message("Found input files:" "${IN_FILES}")
+    # but we can't iterate over them as a list because of https://gitlab.kitware.com/cmake/cmake/issues/14789
+
+set(done FALSE)
+while(NOT done)
+    #message("Checking ${IN_FILES}")
+    string(LENGTH "${IN_FILES}" len)
+
+    if(len GREATER 0)
+        string(FIND "${IN_FILES}" ";" semi_pos)
+        # message("  Semi at ${semi_pos}")
+        if(semi_pos EQUAL -1)
+            set(in_file "${IN_FILES}")      # last filename
+            set(IN_FILES "")
+            set(done TRUE)
+        else()
+            math(EXPR pos "${semi_pos}+1")
+            # message("  New pos ${pos}")
+            string(SUBSTRING "${IN_FILES}" 0 ${semi_pos} in_file)
+            string(SUBSTRING "${IN_FILES}" ${pos} -1 IN_FILES)
+        endif()
+
+        # message("${in_file}: Copying ${CMAKE_CURRENT_SOURCE_DIR}/${in_file} to ${CMAKE_CURRENT_BINARY_DIR}/${in_file}")
+        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${in_file}"
+            "${CMAKE_CURRENT_BINARY_DIR}/${in_file}"
+            COPYONLY
+        )
+
+    else()
+        set(done TRUE)
+    endif()
+
+endwhile()
 
