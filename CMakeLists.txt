@@ -45,6 +45,13 @@ function(new_ec_test name ec_file src_file regex)
     set_tests_properties(${name} PROPERTIES PASS_REGULAR_EXPRESSION "${regex}")
 endfunction()
 
+# Test that the output _doesn't_ match a given regex
+function(new_ec_test_does_not_match name ec_file src_file regex)
+    add_test(${name} ${EDITORCONFIG_CMD} -f ${ec_file}
+        "${CMAKE_CURRENT_SOURCE_DIR}/${src_file}")
+    set_tests_properties(${name} PROPERTIES FAIL_REGULAR_EXPRESSION "${regex}")
+endfunction()
+
 # The tests that requires version specified
 function(new_ec_test_version name ec_file src_file regex version)
     add_test(${name} ${EDITORCONFIG_CMD} -b ${version} -f ${ec_file}

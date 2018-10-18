@@ -1,0 +1,8 @@
+[*]
+child_wins=no
+
+[test.*]
+from_test_parent=yes
+
+[*.file]
+from_file_parent=yes

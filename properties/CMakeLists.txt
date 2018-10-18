@@ -101,3 +101,25 @@ new_ec_test(lowercase_values3 lowercase_values.in test3.c
 # test that all property names are lowercased
 new_ec_test(lowercase_names lowercase_names.in test.c
     "^testproperty=testvalue[ \t\n\r]*$")
+
+# Test that values are pulled correctly from multiple sections across
+# multiple editorconfig files
+new_ec_test(multi_section_a multi_section.in "test.file"
+    "(^|[\n\r]+)from_test=yes[ \t\n\r]+")
+
+new_ec_test(multi_section_b multi_section.in "test.file"
+    "(^|[\n\r]+)from_file=yes[ \t\n\r]+")
+
+new_ec_test(multi_section_c multi_section.in "test.file"
+    "(^|[\n\r]+)from_test_parent=yes[ \t\n\r]+")
+
+new_ec_test(multi_section_d multi_section.in "test.file"
+    "(^|[\n\r]+)from_file_parent=yes[ \t\n\r]+")
+
+# ... and that properties in editorconfig files closer to the target file
+# win over properties in editorconfig files closer to the root.
+new_ec_test(multi_section_e multi_section.in "test.file"
+    "(^|[\n\r]+)child_wins=yes[ \t\n\r]+")
+
+new_ec_test_does_not_match(multi_section_f multi_section.in "test.file"
+    "(^|[\n\r]+)child_wins=no[ \t\n\r]+")
