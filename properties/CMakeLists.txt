@@ -24,20 +24,35 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+# Any time you want to test for two different output lines, test them
+# separately.  That way they can occur in either order in the output.
+# See editorconfig/editorconfig#375.
 
 # test tab_width default
-new_ec_test(tab_width_default tab_width_default.in test.c
-    "^indent_style=space[ \t]*[\n\r]+indent_size=4[ \t]*[\n\r]+tab_width=4[\t\n\r]*$")
+new_ec_test(tab_width_default_a tab_width_default.in test.c
+    "(^|[\n\r]+)indent_style=space[ \t\n\r]+")
+
+new_ec_test(tab_width_default_b tab_width_default.in test.c
+    "(^|[\n\r]+)indent_size=4[ \t\n\r]+")
+
+new_ec_test(tab_width_default_c tab_width_default.in test.c
+    "(^|[\n\r]+)tab_width=4[ \t\n\r]+")
 
 # Tab_width should not be set to any value if indent_size is "tab" and
 # tab_width is not set
-new_ec_test(tab_width_default_indent_size_tab tab_width_default.in test2.c
-    "^indent_style=tab[ \t]*[\n\r]+indent_size=tab[ \t\n\r]*$")
+new_ec_test(tab_width_default_indent_size_tab_a tab_width_default.in test2.c
+    "(^|[\n\r]+)indent_style=tab[ \t\n\r]+")
+
+new_ec_test(tab_width_default_indent_size_tab_b tab_width_default.in test2.c
+    "(^|[\n\r]+)indent_size=tab[ \t\n\r]+")
 
 # Test indent_size default. When indent_style is "tab", indent_size defaults to
 # "tab".
-new_ec_test(indent_size_default indent_size_default.in test.c
-    "^indent_style=tab[ \t]*[\n\r]+indent_size=tab[ \t\n\r]*$")
+new_ec_test(indent_size_default_a indent_size_default.in test.c
+    "(^|[\n\r]+)indent_style=tab[ \t\n\r]+")
+
+new_ec_test(indent_size_default_b indent_size_default.in test.c
+    "(^|[\n\r]+)indent_size=tab[ \t\n\r]+")
 
 # Test indent_size default. When indent_style is "tab", indent_size should have
 # no default value for version prior than 0.9.0.
@@ -51,13 +66,16 @@ new_ec_test(indent_size_default_space indent_size_default.in test2.c
 
 # Test indent_size default. When indent_style is "tab" and tab_width is set,
 # indent_size should default to tab_width
-new_ec_test(indent_size_default_with_tab_width indent_size_default.in test3.c
-    "^indent_style=tab[ \t]*[\n\r]+tab_width=2[ \t]*[\n\r]+indent_size=2[ \t\n\r]*$")
+new_ec_test(indent_size_default_with_tab_width_a indent_size_default.in test3.c
+    "(^|[\n\r]+)indent_style=tab[ \t\n\r]+")
+
+new_ec_test(indent_size_default_with_tab_width_b indent_size_default.in test3.c
+    "(^|[\n\r]+)tab_width=2[ \t\n\r]+")
+
+new_ec_test(indent_size_default_with_tab_width_c indent_size_default.in test3.c
+    "(^|[\n\r]+)indent_size=2[ \t\n\r]+")
 
 # test that same property values are lowercased (v0.9.0 properties).
-# Since we are testing for two different lines, test them separately.  That way
-# they can occur in either order in the output.
-# See editorconfig/editorconfig#375.
 new_ec_test(lowercase_values1_a lowercase_values.in test1.c
     "(^|[\n\r]+)indent_style=space[ \t\n\r]+")
 
