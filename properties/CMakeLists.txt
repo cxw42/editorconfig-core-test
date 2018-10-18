@@ -1,16 +1,16 @@
 #
 # Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1. Redistributions of source code must retain the above copyright notice,
 #    this list of conditions and the following disclaimer.
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 #    this list of conditions and the following disclaimer in the documentation
 #    and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -54,13 +54,27 @@ new_ec_test(indent_size_default_space indent_size_default.in test2.c
 new_ec_test(indent_size_default_with_tab_width indent_size_default.in test3.c
     "^indent_style=tab[ \t]*[\n\r]+tab_width=2[ \t]*[\n\r]+indent_size=2[ \t\n\r]*$")
 
-# test that same property values are lowercased (v0.9.0 properties)
-new_ec_test(lowercase_values1 lowercase_values.in test1.c
-    "^indent_style=space[ \t]*[\n\r]+end_of_line=crlf[ \t\n\r]*$")
+# test that same property values are lowercased (v0.9.0 properties).
+# Since we are testing for two different lines, test them separately.  That way
+# they can occur in either order in the output.
+# See editorconfig/editorconfig#375.
+new_ec_test(lowercase_values1_a lowercase_values.in test1.c
+    "(^|[\n\r]+)indent_style=space[ \t\n\r]+")
+
+new_ec_test(lowercase_values1_b lowercase_values.in test1.c
+    "(^|[\n\r]+)end_of_line=crlf[ \t\n\r]+")
 
 # test that same property values are lowercased (v0.9.0 properties)
-new_ec_test(lowercase_values2 lowercase_values.in test2.c
-    "^insert_final_newline=true[ \t]*[\n\r]+trim_trailing_whitespace=false[ \t]*[\n\r]+charset=utf-8[ \t\n\r]*$")
+new_ec_test(lowercase_values2_a lowercase_values.in test2.c
+    "(^|[\n\r]+)insert_final_newline=true[ \t\n\r]+")
+
+new_ec_test(lowercase_values2_b lowercase_values.in test2.c
+    "(^|[\n\r]+)trim_trailing_whitespace=false[ \t\n\r]+")
+
+new_ec_test(lowercase_values2_c lowercase_values.in test2.c
+    "(^|[\n\r]+)charset=utf-8[ \t\n\r]+")
+
+#    "^insert_final_newline=true[ \t]*[\n\r]+trim_trailing_whitespace=false[ \t]*[\n\r]+charset=utf-8[ \t\n\r]*$")
 
 # test that same property values are not lowercased
 new_ec_test(lowercase_values3 lowercase_values.in test3.c
