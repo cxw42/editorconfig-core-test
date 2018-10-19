@@ -92,8 +92,6 @@ new_ec_test(lowercase_values2_b lowercase_values.in test2.c
 new_ec_test(lowercase_values2_c lowercase_values.in test2.c
     "(^|[\n\r]+)charset=utf-8[ \t\n\r]+")
 
-#    "^insert_final_newline=true[ \t]*[\n\r]+trim_trailing_whitespace=false[ \t]*[\n\r]+charset=utf-8[ \t\n\r]*$")
-
 # test that same property values are not lowercased
 new_ec_test(lowercase_values3 lowercase_values.in test3.c
     "^test_property=TestValue[ \t\n\r]*$")
