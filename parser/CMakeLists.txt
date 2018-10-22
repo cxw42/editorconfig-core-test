@@ -70,7 +70,8 @@ new_ec_test(spaces_before_section_name whitespace.in test8.c
 new_ec_test(spaces_after_section_name whitespace.in test9.c "^key=value[ \t\n\r]*$")
 
 # test spaces at beginning of line between properties
-ec_test_lines(NAME spaces_before_middle_property EC_FILE whitespace.in SRC_FILE test10.c
+ec_test_lines(NAME spaces_before_middle_property EC_FILE whitespace.in
+    SRC_FILE test10.c
     REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*" "key3=value3[ \t]*")
 
 # test colon seperator with no whitespaces in property assignment

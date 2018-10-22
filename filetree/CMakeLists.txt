@@ -29,8 +29,9 @@
 new_ec_test(parent_directory parent_directory.in parent_directory/test.a "^key=value[ \t\n\r]*$")
 
 # Test for EditorConfig file in parent directory and current directory
-ec_test_lines(NAME parent_and_current_dir EC_FILE parent_directory.in SRC_FILE parent_directory/test.b
-    REGEXES "^key1=value1[ \t]*" "key2=value2[ \t]*")
+ec_test_lines(NAME parent_and_current_dir EC_FILE parent_directory.in
+    SRC_FILE parent_directory/test.b
+    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # Test for file in parent directory and overloaded by file in current directory
 new_ec_test(parent_dir_overload parent_directory.in parent_directory/test.c "^key=valueB[ \t\n\r]*$")

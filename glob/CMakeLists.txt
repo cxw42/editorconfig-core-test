@@ -47,7 +47,8 @@ ec_test_lines(NAME star_after_slash EC_FILE star.in SRC_FILE Bar/foo.txt
     REGEXES "keyb=valueb[ \t]*" "keyc=valuec[ \t]*")
 
 # star matches a dot file after slash
-ec_test_lines(NAME star_matches_dot_file_after_slash EC_FILE star.in SRC_FILE Bar/.editorconfig
+ec_test_lines(NAME star_matches_dot_file_after_slash EC_FILE star.in
+    SRC_FILE Bar/.editorconfig
     REGEXES "keyb=valueb[ \t]*" "keyc=valuec[ \t]*")
 
 # star matches a dot file

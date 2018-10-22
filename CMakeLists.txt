@@ -79,7 +79,8 @@ function(ec_test_lines)
 
     add_test("${P_NAME}" ${EDITORCONFIG_CMD} -f "${P_EC_FILE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/${P_SRC_FILE}")
-    set_tests_properties("${P_NAME}" PROPERTIES PASS_REGULAR_EXPRESSION "${regex}")
+    set_tests_properties("${P_NAME}"
+        PROPERTIES PASS_REGULAR_EXPRESSION "${regex}")
 endfunction(ec_test_lines)
 
 # The tests that requires version specified
