@@ -54,8 +54,9 @@ new_ec_test(spaces_after_property_value whitespace.in test5.c
     "^key=value[ \t\n\r]*$")
 
 # test blank lines between properties
-new_ec_test(blank_lines_between_properties whitespace.in test6.c
-    "^(key1=value1[ \t]*[\n\r]+key2=value2[ \t\n\r]*)|(key2=value2[ \t]*[\n\r]+key1=value1[ \t\n\r]*)$")
+ec_test_lines(NAME blank_lines_between_properties EC_FILE whitespace.in
+    SRC_FILE test6.c
+    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # test spaces in section name
 new_ec_test(spaces_in_section_name whitespace.in " test 7 "
@@ -107,8 +108,8 @@ new_ec_test(comment_before_props comments.in test3.c
     "^key=value[ \t\n\r]*$")
 
 # test comments ignored between properties
-new_ec_test(comment_between_props comments.in test4.c
-    "^(key1=value1[ \t]*[\n\r]+key2=value2[ \t\n\r]*)|(key2=value2[ \t]*[\n\r]+key1=value1[ \t\n\r]*)$")
+ec_test_lines(NAME comment_between_props EC_FILE comments.in SRC_FILE test4.c
+    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # test semicolons at end of property value are included in value
 new_ec_test(semicolon_in_property comments.in test5.c
@@ -135,8 +136,9 @@ new_ec_test(octothorpe_comment_before_props comments.in test9.c
     "^key=value[ \t\n\r]*$")
 
 # test octothorpe comments ignored between properties
-new_ec_test(octothorpe_comment_between_props comments.in test10.c
-    "^key1=value1[ \t]*[\n\r]+key2=value2[ \t\n\r]*$")
+ec_test_lines(NAME octothorpe_comment_between_props EC_FILE comments.in
+    SRC_FILE test10.c
+    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # test octothorpe at end of property value are included in value
 new_ec_test(octothorpe_in_property comments.in test11.c
