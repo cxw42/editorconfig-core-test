@@ -47,6 +47,14 @@ function(new_ec_test name ec_file src_file regex)
     set_tests_properties(${name} PROPERTIES PASS_REGULAR_EXPRESSION "${regex}")
 endfunction()
 
+# Test that the output _doesn't_ match a given regex
+function(new_ec_test_does_not_match name ec_file src_file regex)
+    add_test(${name} ${EDITORCONFIG_CMD} -f ${ec_file}
+        "${CMAKE_CURRENT_SOURCE_DIR}/${src_file}")
+    set_tests_properties(${name} PROPERTIES FAIL_REGULAR_EXPRESSION "${regex}")
+endfunction()
+
+
 # Test for multiple regexes in any order in the output.  Each regex should
 # match one line.
 # Example:
@@ -67,7 +75,7 @@ function(ec_test_lines)
     # Build the joint regex by building all possible permutations of
     # the input regex.
     make_regex_of_permutations(RETVAL regex REGEXES ${P_REGEXES})
-    message("Bulk regex:        ${regex}")
+    #message("Bulk regex:        ${regex}")
 
     add_test("${P_NAME}" ${EDITORCONFIG_CMD} -f "${P_EC_FILE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/${P_SRC_FILE}")

@@ -1,16 +1,16 @@
 #
 # Copyright (c) 2011-2013 EditorConfig Team
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1. Redistributions of source code must retain the above copyright notice,
 #    this list of conditions and the following disclaimer.
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 #    this list of conditions and the following disclaimer in the documentation
 #    and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -27,8 +27,10 @@
 # Basic parser tests
 
 # test repeat sections
-new_ec_test(repeat_sections basic.in a.a "^option1=value1[ \t]*[\n\r]+option2=value2[ \t\n\r]*$")
-new_ec_test(basic_cascade basic.in b.b "^option1=c[ \t]*[\n\r]+option2=b[ \t\n\r]*$")
+ec_test_lines(NAME repeat_sections EC_FILE basic.in SRC_FILE a.a
+    REGEXES "option1=value1[ \t]*" "option2=value2[ \t]*")
+ec_test_lines(NAME basic_cascade EC_FILE basic.in SRC_FILE b.b
+    REGEXES "^option1=c[ \t]*" "option2=b[ \t]*")
 
 # Tests for whitespace parsing
 
@@ -52,8 +54,8 @@ new_ec_test(spaces_after_property_value whitespace.in test5.c
     "^key=value[ \t\n\r]*$")
 
 # test blank lines between properties
-new_ec_test(blank_lines_between_properties whitespace.in test6.c 
-    "^key1=value1[ \t]*[\n\r]+key2=value2[ \t\n\r]*$")
+new_ec_test(blank_lines_between_properties whitespace.in test6.c
+    "^(key1=value1[ \t]*[\n\r]+key2=value2[ \t\n\r]*)|(key2=value2[ \t]*[\n\r]+key1=value1[ \t\n\r]*)$")
 
 # test spaces in section name
 new_ec_test(spaces_in_section_name whitespace.in " test 7 "
@@ -67,7 +69,8 @@ new_ec_test(spaces_before_section_name whitespace.in test8.c
 new_ec_test(spaces_after_section_name whitespace.in test9.c "^key=value[ \t\n\r]*$")
 
 # test spaces at beginning of line between properties
-new_ec_test(spaces_before_middle_property whitespace.in test10.c "^key1=value1[ \t]*[\n\r]+key2=value2[ \t]*[\n\r]+key3=value3[ \t\n\r]*$")
+ec_test_lines(NAME spaces_before_middle_property EC_FILE whitespace.in SRC_FILE test10.c
+    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*" "key3=value3[ \t]*")
 
 # test colon seperator with no whitespaces in property assignment
 new_ec_test(colon_sep_no_whitespace whitespace.in test1.d "^key=value[ \t\n\r]*$")
@@ -105,7 +108,7 @@ new_ec_test(comment_before_props comments.in test3.c
 
 # test comments ignored between properties
 new_ec_test(comment_between_props comments.in test4.c
-    "^key1=value1[ \t]*[\n\r]+key2=value2[ \t\n\r]*$")
+    "^(key1=value1[ \t]*[\n\r]+key2=value2[ \t\n\r]*)|(key2=value2[ \t]*[\n\r]+key1=value1[ \t\n\r]*)$")
 
 # test semicolons at end of property value are included in value
 new_ec_test(semicolon_in_property comments.in test5.c

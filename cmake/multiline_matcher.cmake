@@ -251,6 +251,20 @@ function( make_regex_of_permutations )
 
     list( LENGTH P_REGEXES NR )     # NR = how many regexes
 
+    if("${NR}" EQUAL "0")
+        message(FATAL_ERROR "REGEXES argument required")
+        return()
+    endif()
+
+    # Degenerate case: single element.  Warn because there is almost certainly
+    # no need to use this macro in that case.
+    if("${NR}" EQUAL "1")
+        list(GET P_REGEXES 0 elem)
+        message(WARNING "Only one regex given.  Did you forget one?")
+        set( ${P_RETVAL} "${elem}" PARENT_SCOPE )
+        return()
+    endif()
+
     # CMake regexes are limited to nine groups, as far as I can tell.  That
     # means we can only use regexes with go up to 3! = 6 permutations.
     # However, this function can generate any number of permutations,
@@ -264,7 +278,7 @@ function( make_regex_of_permutations )
     set( NP 1 )                     # NP = how many permutations = NR!
     set( a "1" )                    # J-T current permutation
     set( dirs "${ECT_LEFT}" )       # J-T direction
-    foreach( idx RANGE 2 "${NR}" )
+    foreach( idx RANGE 2 "${NR}" )  # NR >= 2 because we checked 0 and 1 above
         math( EXPR NP "${NP} * ${idx}" )
         set( a "${a};${idx}" )
         set( dirs "${dirs};${ECT_LEFT}" )
