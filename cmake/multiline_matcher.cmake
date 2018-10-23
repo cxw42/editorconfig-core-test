@@ -215,18 +215,18 @@ function( re_assemble_perm )
 
     # Argument parsing
     set( one_value_keywords RETVAL )
-    set( multi_value_keywords ORDER REGEXES )
+    set( multi_value_keywords ORDER EXPECTED )
     cmake_parse_arguments( P "" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN} )
 
-    #message( "Assembling in order ${P_ORDER} the regexes ${P_REGEXES}" )
+    #message( "Assembling in order ${P_ORDER} the regexes ${P_EXPECTED}" )
 
-    list( LENGTH P_REGEXES NR )
+    list( LENGTH P_EXPECTED NR )
     math( EXPR maxr "${NR} - 1" )
     set( rv "${ECT_MATCH_LINE_START}" )
     foreach( idx RANGE 0 "${maxr}" )
         list( GET P_ORDER "${idx}" curr_order )
         math( EXPR curr_order "${curr_order} - 1" )   # 1-based -> 0-based
-        list( GET P_REGEXES "${curr_order}" curr_regex )
+        list( GET P_EXPECTED "${curr_order}" curr_regex )
         set( rv "${rv}${curr_regex}${ECT_MATCH_LINE_END}" )
     endforeach()
 
@@ -242,24 +242,24 @@ function( make_regex_of_permutations )
     # Argument parsing
     set( options FORCE )
     set( one_value_keywords RETVAL )
-    set( multi_value_keywords REGEXES )
+    set( multi_value_keywords EXPECTED )
     cmake_parse_arguments( P "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN} )
 
     #message( "Retval name:       " "${P_RETVAL}" )
-    #message( "Regexes:           " "${P_REGEXES}" )
+    #message( "Regexes:           " "${P_EXPECTED}" )
     #message( "Force:             " "${P_FORCE}" )
 
-    list( LENGTH P_REGEXES NR )     # NR = how many regexes
+    list( LENGTH P_EXPECTED NR )     # NR = how many regexes
 
     if("${NR}" EQUAL "0")
-        message(FATAL_ERROR "REGEXES argument required")
+        message(FATAL_ERROR "EXPECTED argument required")
         return()
     endif()
 
     # Degenerate case: single element.  Warn because there is almost certainly
     # no need to use this macro in that case.
     if("${NR}" EQUAL "1")
-        list(GET P_REGEXES 0 elem)
+        list(GET P_EXPECTED 0 elem)
         message(WARNING "Only one regex given.  Did you forget one?")
         set( ${P_RETVAL} "${elem}" PARENT_SCOPE )
         return()
@@ -290,7 +290,7 @@ function( make_regex_of_permutations )
     #message( "  dirs:         ${dirs}" )
 
     # Do perm 1
-    re_assemble_perm( RETVAL curr_re ORDER ${a} REGEXES ${P_REGEXES} )
+    re_assemble_perm( RETVAL curr_re ORDER ${a} EXPECTED ${P_EXPECTED} )
     #message( "  Perm 0 is: ${curr_re}" )
     set( rv "${curr_re}" )      # the regex we are building
 
@@ -304,7 +304,7 @@ function( make_regex_of_permutations )
         endif( jt_done )
         #message( "Got new order ${a}" )
 
-        re_assemble_perm( RETVAL curr_re ORDER ${a} REGEXES ${P_REGEXES} )
+        re_assemble_perm( RETVAL curr_re ORDER ${a} EXPECTED ${P_EXPECTED} )
         #message( "  Perm is: ${curr_re}" )
         set( rv "${rv}|${curr_re}" )
     endforeach()

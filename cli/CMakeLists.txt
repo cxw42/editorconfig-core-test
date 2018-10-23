@@ -47,7 +47,7 @@ add_test(multiple_files_on_command_line ${EDITORCONFIG_CMD} -f cli.in
 
 make_regex_of_permutations(     # each pair of lines must be in that order,
     RETVAL multi_files_regex    # but the pairs can be in either order.
-    REGEXES
+    EXPECTED
     "\\[${CMAKE_CURRENT_SOURCE_DIR}/file1.c\\][ \t]*[\n\r]+key1=value1[ \t]*"
     "\\[${CMAKE_CURRENT_SOURCE_DIR}/file2.cpp\\][ \t]*[\n\r]+key2=value2[ \t]*"
 )

@@ -28,19 +28,19 @@
 # test tab_width default
 ec_test_lines(NAME tab_width_default EC_FILE tab_width_default.in
     SRC_FILE test.c
-    REGEXES "indent_style=space[ \t]*" "indent_size=4[ \t]*" "tab_width=4[\t]*")
+    EXPECTED "indent_style=space[ \t]*" "indent_size=4[ \t]*" "tab_width=4[\t]*")
 
 # Tab_width should not be set to any value if indent_size is "tab" and
 # tab_width is not set
 ec_test_lines(NAME tab_width_default_indent_size_tab
     EC_FILE tab_width_default.in SRC_FILE test2.c
-    REGEXES "indent_style=tab[ \t]*" "indent_size=tab[ \t]*")
+    EXPECTED "indent_style=tab[ \t]*" "indent_size=tab[ \t]*")
 
 # Test indent_size default. When indent_style is "tab", indent_size defaults to
 # "tab".
 ec_test_lines(NAME indent_size_default EC_FILE indent_size_default.in
     SRC_FILE test.c
-    REGEXES "^indent_style=tab[ \t]*" "indent_size=tab[ \t]*")
+    EXPECTED "^indent_style=tab[ \t]*" "indent_size=tab[ \t]*")
 
 # Test indent_size default. When indent_style is "tab", indent_size should have
 # no default value for version prior than 0.9.0.
@@ -58,7 +58,7 @@ ec_test_lines(
     NAME indent_size_default_with_tab_width
     EC_FILE indent_size_default.in
     SRC_FILE test3.c
-    REGEXES
+    EXPECTED
     "indent_style=tab[ \t]*"
     "tab_width=2[ \t]*"
     "indent_size=2[ \t]*"
@@ -66,12 +66,12 @@ ec_test_lines(
 # test that same property values are lowercased (v0.9.0 properties)
 ec_test_lines(NAME lowercase_values1 EC_FILE lowercase_values.in
     SRC_FILE test1.c
-    REGEXES "indent_style=space[ \t]*" "end_of_line=crlf[ \t]*")
+    EXPECTED "indent_style=space[ \t]*" "end_of_line=crlf[ \t]*")
 
 # test that same property values are lowercased (v0.9.0 properties)
 ec_test_lines(NAME lowercase_values2 EC_FILE lowercase_values.in
     SRC_FILE test2.c
-    REGEXES
+    EXPECTED
     "insert_final_newline=true[ \t]*"
     "trim_trailing_whitespace=false[ \t]*"
     "charset=utf-8[ \t]*"

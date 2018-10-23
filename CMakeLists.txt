@@ -58,23 +58,23 @@ endfunction()
 # Test for multiple regexes in any order in the output.  Each regex should
 # match one line.
 # Example:
-#   ec_test_lines(NAME foo EC_FILE ec.in SRC_FILE src_file REGEXES "a" "b" "c")
+#   ec_test_lines(NAME foo EC_FILE ec.in SRC_FILE src_file EXPECTED "a" "b" "c")
 function(ec_test_lines)
 
     # Parse the arguments
     set(one_value_keywords NAME EC_FILE SRC_FILE)
-    set(multi_value_keywords REGEXES)
+    set(multi_value_keywords EXPECTED)
     cmake_parse_arguments(P "" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
 
     #message("Adding test:")
     #message("Name:              ${P_NAME}")
     #message("Editorconfig file: ${P_EC_FILE}")
     #message("Source file:       ${P_SRC_FILE}")
-    #message("Regexes:           ${P_REGEXES}")
+    #message("Regexes:           ${P_EXPECTED}")
 
     # Build the joint regex by building all possible permutations of
     # the input regex.
-    make_regex_of_permutations(RETVAL regex REGEXES ${P_REGEXES})
+    make_regex_of_permutations(RETVAL regex EXPECTED ${P_EXPECTED})
     #message("Bulk regex:        ${regex}")
 
     add_test("${P_NAME}" ${EDITORCONFIG_CMD} -f "${P_EC_FILE}"

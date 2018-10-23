@@ -28,9 +28,9 @@
 
 # test repeat sections
 ec_test_lines(NAME repeat_sections EC_FILE basic.in SRC_FILE a.a
-    REGEXES "option1=value1[ \t]*" "option2=value2[ \t]*")
+    EXPECTED "option1=value1[ \t]*" "option2=value2[ \t]*")
 ec_test_lines(NAME basic_cascade EC_FILE basic.in SRC_FILE b.b
-    REGEXES "^option1=c[ \t]*" "option2=b[ \t]*")
+    EXPECTED "^option1=c[ \t]*" "option2=b[ \t]*")
 
 # Tests for whitespace parsing
 
@@ -56,7 +56,7 @@ new_ec_test(spaces_after_property_value whitespace.in test5.c
 # test blank lines between properties
 ec_test_lines(NAME blank_lines_between_properties EC_FILE whitespace.in
     SRC_FILE test6.c
-    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
+    EXPECTED "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # test spaces in section name
 new_ec_test(spaces_in_section_name whitespace.in " test 7 "
@@ -72,7 +72,7 @@ new_ec_test(spaces_after_section_name whitespace.in test9.c "^key=value[ \t\n\r]
 # test spaces at beginning of line between properties
 ec_test_lines(NAME spaces_before_middle_property EC_FILE whitespace.in
     SRC_FILE test10.c
-    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*" "key3=value3[ \t]*")
+    EXPECTED "key1=value1[ \t]*" "key2=value2[ \t]*" "key3=value3[ \t]*")
 
 # test colon seperator with no whitespaces in property assignment
 new_ec_test(colon_sep_no_whitespace whitespace.in test1.d "^key=value[ \t\n\r]*$")
@@ -110,7 +110,7 @@ new_ec_test(comment_before_props comments.in test3.c
 
 # test comments ignored between properties
 ec_test_lines(NAME comment_between_props EC_FILE comments.in SRC_FILE test4.c
-    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
+    EXPECTED "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # test semicolons at end of property value are included in value
 new_ec_test(semicolon_in_property comments.in test5.c
@@ -139,7 +139,7 @@ new_ec_test(octothorpe_comment_before_props comments.in test9.c
 # test octothorpe comments ignored between properties
 ec_test_lines(NAME octothorpe_comment_between_props EC_FILE comments.in
     SRC_FILE test10.c
-    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
+    EXPECTED "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # test octothorpe at end of property value are included in value
 new_ec_test(octothorpe_in_property comments.in test11.c

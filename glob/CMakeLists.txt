@@ -29,27 +29,27 @@
 
 # matches a single characters
 ec_test_lines(NAME star_single EC_FILE star.in SRC_FILE ace.c
-    REGEXES "key=value[ \t]*" "keyc=valuec[ \t]*")
+    EXPECTED "key=value[ \t]*" "keyc=valuec[ \t]*")
 
 # matches zero characters
 ec_test_lines(NAME star_zero EC_FILE star.in SRC_FILE ae.c
-    REGEXES "key=value[ \t]*" "keyc=valuec[ \t]*")
+    EXPECTED "key=value[ \t]*" "keyc=valuec[ \t]*")
 
 # matches multiple characters
 ec_test_lines(NAME star_multiple EC_FILE star.in SRC_FILE abcde.c
-    REGEXES "key=value[ \t]*" "keyc=valuec[ \t]*")
+    EXPECTED "key=value[ \t]*" "keyc=valuec[ \t]*")
 
 # does not match path separator
 new_ec_test(star_over_slash star.in a/e.c "^[ \t\n\r]*keyc=valuec[ \t\n\r]*$")
 
 # star after a slash
 ec_test_lines(NAME star_after_slash EC_FILE star.in SRC_FILE Bar/foo.txt
-    REGEXES "keyb=valueb[ \t]*" "keyc=valuec[ \t]*")
+    EXPECTED "keyb=valueb[ \t]*" "keyc=valuec[ \t]*")
 
 # star matches a dot file after slash
 ec_test_lines(NAME star_matches_dot_file_after_slash EC_FILE star.in
     SRC_FILE Bar/.editorconfig
-    REGEXES "keyb=valueb[ \t]*" "keyc=valuec[ \t]*")
+    EXPECTED "keyb=valueb[ \t]*" "keyc=valuec[ \t]*")
 
 # star matches a dot file
 new_ec_test(star_matches_dot_file star.in .editorconfig "^keyc=valuec[ \t\n\r]*$")

@@ -31,7 +31,7 @@ new_ec_test(parent_directory parent_directory.in parent_directory/test.a "^key=v
 # Test for EditorConfig file in parent directory and current directory
 ec_test_lines(NAME parent_and_current_dir EC_FILE parent_directory.in
     SRC_FILE parent_directory/test.b
-    REGEXES "key1=value1[ \t]*" "key2=value2[ \t]*")
+    EXPECTED "key1=value1[ \t]*" "key2=value2[ \t]*")
 
 # Test for file in parent directory and overloaded by file in current directory
 new_ec_test(parent_dir_overload parent_directory.in parent_directory/test.c "^key=valueB[ \t\n\r]*$")
@@ -92,7 +92,7 @@ new_ec_test(path_with_special_chars path_with_special_chars.in "path_with_specia
 new_ec_test(unset_charset unset.in unset/charset.txt "^charset=unset[ \t\n\r]*$")
 new_ec_test(unset_end_of_line unset.in unset/end_of_line.txt "^end_of_line=unset[ \t\n\r]*$")
 ec_test_lines(NAME unset_indent_size EC_FILE unset.in SRC_FILE unset/indent_size.txt
-    REGEXES "indent_size=unset[ \t]*" "tab_width=unset[ \t]*")
+    EXPECTED "indent_size=unset[ \t]*" "tab_width=unset[ \t]*")
 new_ec_test(unset_indent_style unset.in unset/indent_style.txt "^indent_style=unset[ \t\n\r]*$")
 new_ec_test(unset_insert_final_newline unset.in unset/insert_final_newline.txt "^insert_final_newline=unset[ \t\n\r]*$")
 new_ec_test(unset_tab_width unset.in unset/tab_width.txt "^tab_width=unset[ \t\n\r]*$")
