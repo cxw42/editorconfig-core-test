@@ -1,16 +1,16 @@
 #
 # Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1. Redistributions of source code must retain the above copyright notice,
 #    this list of conditions and the following disclaimer.
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 #    this list of conditions and the following disclaimer in the documentation
 #    and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -85,11 +85,13 @@ if( (NOT WIN32) AND (NOT CYGWIN) )
 endif()
 
 new_ec_test(path_with_special_chars path_with_special_chars.in "path_with_special_[chars/test.a" "^key=value[ \t\n\r]*$")
+## " <-- resync the syntax highlighter
 
 # Test the unset value with various common properties
 new_ec_test(unset_charset unset.in unset/charset.txt "^charset=unset[ \t\n\r]*$")
 new_ec_test(unset_end_of_line unset.in unset/end_of_line.txt "^end_of_line=unset[ \t\n\r]*$")
-new_ec_test(unset_indent_size unset.in unset/indent_size.txt "^indent_size=unset[ \t\n\r]*tab_width=unset[ \t\n\r]*$")
+new_ec_test_multiline(unset_indent_size_ML unset.in unset/indent_size.txt
+    "indent_size=unset[ \t\n\r]*tab_width=unset[ \t\n\r]*")
 new_ec_test(unset_indent_style unset.in unset/indent_style.txt "^indent_style=unset[ \t\n\r]*$")
 new_ec_test(unset_insert_final_newline unset.in unset/insert_final_newline.txt "^insert_final_newline=unset[ \t\n\r]*$")
 new_ec_test(unset_tab_width unset.in unset/tab_width.txt "^tab_width=unset[ \t\n\r]*$")
