@@ -25,20 +25,21 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required( VERSION 3.5 )
 
-set( dir "${CMAKE_CURRENT_LIST_DIR}" )
+set( tests_meta_cmakelists_dir "${CMAKE_CURRENT_LIST_DIR}" )
 
 # Line separator regex, for convenience
 set( L "[ \t\n\r]+" )
 
+message( STATUS "meta: Using editorconfig ${EDITORCONFIG_CMD}" )
+
 # Test run_and_sort()
-add_test( meta_runandsort cmake -P "${dir}/sample.cmake" )
+add_test( meta_runandsort cmake -P "${tests_meta_cmakelists_dir}/sample.cmake" )
 set_tests_properties( meta_runandsort PROPERTIES PASS_REGULAR_EXPRESSION
     "^[\n]*0${L}a;b${L}b;c${L}b;e${L}b;f${L}c;b;a${L}d${L}$" )
     # Have to permit leading \n's - I don't know how to get rid of them
 
 # Test the new multiline macro on a simple case
-message( STATUS "Using editorconfig ${EDITORCONFIG_CMD}" )
 new_ec_test_multiline( meta_multiline meta.in meta.c
     "^[\n]*answer=42${L}$" )

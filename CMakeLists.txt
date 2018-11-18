@@ -30,7 +30,8 @@
 project(editorconfig-core-test NONE)
 
 # Where this file lives
-set( dir "${CMAKE_CURRENT_LIST_DIR}" )
+set( tests_cmakelists_dir "${CMAKE_CURRENT_LIST_DIR}" )
+#message( STATUS "Tests are in ${tests_cmakelists_dir}" )
 
 # Only when we are using editorconfig-core-test independently should we check
 # cmake version, set EDITORCONFIG_CMD as cache string, and enable_testing()
@@ -64,12 +65,14 @@ endfunction()
 # A test that returns multiple lines of output.  CAUTION: filenames used in
 # these tests may not contain semicolons.
 function(new_ec_test_multiline name ec_file src_file regex)
+    #message( STATUS "Building multiline test ${name} with tests_cmakelists_dir ${tests_cmakelists_dir}" )
+    #message( STATUS "List dir ${CMAKE_CURRENT_LIST_DIR}, source dir ${CMAKE_CURRENT_SOURCE_DIR}" )
     add_test(${name} "cmake"
                 "-D" "EDITORCONFIG_CMD=${EDITORCONFIG_CMD}"
                     # Since variables aren't autpmatically passed to the inner cmake
                 "-D" "ECARGS:LIST=-f;${ec_file};${CMAKE_CURRENT_SOURCE_DIR}/${src_file}"
                     # Note: the semicolons separate list elements.
-                "-P" "${dir}/cmake/ec_sort.cmake")
+                "-P" "${tests_cmakelists_dir}/cmake/ec_sort.cmake")
     set_tests_properties(${name} PROPERTIES PASS_REGULAR_EXPRESSION "${regex}")
 endfunction()
 
@@ -83,4 +86,3 @@ add_subdirectory(properties)
 add_subdirectory(parser)
 add_subdirectory(filetree)
 add_subdirectory(cli)
-

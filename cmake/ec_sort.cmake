@@ -33,8 +33,8 @@
 cmake_minimum_required( VERSION 3.5 )
 
 # See documentation links at https://stackoverflow.com/q/12802377/2877364
-set( dir "${CMAKE_CURRENT_LIST_DIR}" )
-list( APPEND CMAKE_MODULE_PATH "${dir}/../cmake" )
+set( tests_cmake_ec_sort_dir "${CMAKE_CURRENT_LIST_DIR}" )
+list( APPEND CMAKE_MODULE_PATH "${tests_cmake_ec_sort_dir}/../cmake" )
 include( runandsort )
 
 # Required parameters are in variables: EDITORCONFIG_CMD and ECARGS
@@ -56,4 +56,9 @@ if( ${did_fail} )
     return()
 endif()
 
-message( "${lines}" )   # to stderr
+# message() will give us an extra \n, so trim one if we can.
+string( REGEX REPLACE "(\r\n|\r|\n)$" "" lines "${lines}" )
+
+# Output **to stderr**.  If we used message(STATUS...), it would print to
+# stdout but also emit a leading "--".
+message( "${lines}" )
