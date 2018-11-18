@@ -11,3 +11,9 @@ CTestTestfile.cmake
 
 # Eclipse
 .project
+
+# Editor
+*.bak
+*.swp
+*~
+~*
