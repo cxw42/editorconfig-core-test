@@ -35,7 +35,7 @@ include(multiline_matcher)
 # cmake version, set EDITORCONFIG_CMD as cache string, and enable_testing()
 # here.
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
-    cmake_minimum_required(VERSION 3.1.0)
+    cmake_minimum_required(VERSION 3.5.0)
     set(EDITORCONFIG_CMD "editorconfig" CACHE STRING "editorconfig command.")
     enable_testing()
 endif()
